@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  # Продакшн сервис (ветка main)
+  gik-prod:
+    container_name: gik-prod
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    # Если нужно подключить переменные окружения из файла
+    # env_file:
+    #   - .env.production
+
+  # Дев сервис (ветка dev) - запускается из отдельной директории на сервере
+  # Но если мы хотим все в одном compose, можно описать его тут, 
+  # однако обычно для dev используют отдельный docker-compose.yml или override.
+  # Ниже пример, если бы мы запускали dev версию тоже через Docker в продакшн режиме (превью)
+  # gik-dev:
+  #   container_name: gik-dev
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3001:3000"
